@@ -3,12 +3,12 @@
 // Also see the example directory for another example on how to use skittles
 //
 // package main
-
+//
 // import (
 //   "fmt"
 //   "github.com/acmacalister/skittles"
 // )
-
+//
 // func main() {
 //   fmt.Println(skittles.Red("Red's my favorite color"))
 // }
