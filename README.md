@@ -3,7 +3,7 @@ Skittles
 
 Miminal package for terminal colors/ANSI escape code.
 
-![alt tag](https://raw.github.com/acmacalister/skittles/pictures/terminal-colors.png)
+![alt tag](https://raw.githubusercontent.com/acmacalister/skittles/master/pictures/terminal-colors.png)
 
 ## Install
 
