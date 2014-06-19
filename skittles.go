@@ -1,6 +1,6 @@
 // Miminal package for terminal colors/ANSI escape code.
-// Check out the source here https://github.com/acmacalister/skittles
-// Also see the example directory for another example on how to use skittles
+// Check out the source here https://github.com/acmacalister/skittles.
+// Also see the example directory for another example on how to use skittles.
 //
 //  package main
 //
