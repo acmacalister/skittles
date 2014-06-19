@@ -2,16 +2,16 @@
 // Check out the source here https://github.com/acmacalister/skittles
 // Also see the example directory for another example on how to use skittles
 //
-// package main
+//  package main
 //
-// import (
-//   "fmt"
-//   "github.com/acmacalister/skittles"
-// )
+//  import (
+//    "fmt"
+//    "github.com/acmacalister/skittles"
+//  )
 //
-// func main() {
-//   fmt.Println(skittles.Red("Red's my favorite color"))
-// }
+//  func main() {
+//    fmt.Println(skittles.Red("Red's my favorite color"))
+//  }
 package skittles
 
 import (
