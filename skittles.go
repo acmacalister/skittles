@@ -35,7 +35,7 @@ const (
 )
 
 func makeString(attr string, text interface{}, color int) string {
-	return fmt.Sprintf("\033[%s%dm%s\033[0m", attr, color, text)
+	return fmt.Sprintf("\033[%s%dm%v\033[0m", attr, color, text)
 }
 
 // make the terminal text black - \033[30m
