@@ -16,224 +16,138 @@ package skittles
 
 import (
 	"fmt"
+	"strings"
 )
+
+// source: http://www.termsys.demon.co.uk/vtansi.htm
+// source: http://ascii-table.com/ansi-escape-sequences.php
 
 const (
-	black = iota + 30
-	red
-	green
-	yellow
-	blue
-	magenta
-	cyan
-	white
-	regular   = ""
-	bold      = "1;"
-	blink     = "5;"
-	underline = "4;"
-	inverse   = "7;"
+	nofmt             = "0"
+	bold              = "1"
+	underline         = "4"
+	blink             = "5"
+	inverse           = "7"  // attributes end at 7
+	black             = "30" // colors start at 30
+	red               = "31"
+	green             = "32"
+	yellow            = "33"
+	blue              = "34"
+	magenta           = "35"
+	cyan              = "36"
+	white             = "37" // colors end at 37
+	blackBackground   = "40" // background colors start at 40
+	redBackground     = "41"
+	greenBackground   = "42"
+	yellowBackground  = "43"
+	blueBackground    = "44"
+	magentaBackground = "45"
+	cyanBackground    = "46"
+	whiteBackground   = "47"
 )
 
-func makeString(attr string, text interface{}, color int) string {
-	return fmt.Sprintf("\033[%s%dm%v\033[0m", attr, color, text)
+// makeFunction returns a function that formats some text with the provided list
+// of ANSI escape codes.
+func makeFunction(attributes []string) func(interface{}) string {
+	return func(text interface{}) string {
+		return fmt.Sprintf("\033[%sm%s\033[0m", strings.Join(attributes, ";"), text)
+	}
 }
 
-// make the terminal text black - \033[30m
-func Black(text interface{}) string {
-	return makeString(regular, text, black)
-}
+var (
+	// Reset resets all formatting.
+	Reset = makeFunction([]string{nofmt})
+	// Bold makes terminal text bold and doesn't add any color.
+	Bold = makeFunction([]string{bold})
+	// Underline makes terminal text underlined and doesn't add any color.
+	Underline = makeFunction([]string{underline})
+	// Blink makes terminal text blink and doesn't add any color.
+	Blink = makeFunction([]string{blink})
+	// Inverse inverts terminal text and doesn't add any color.
+	Inverse = makeFunction([]string{inverse})
 
-// make the terminal text red - \033[30m
-func Red(text interface{}) string {
-	return makeString(regular, text, red)
-}
+	// Black makes terminal text black.
+	Black = makeFunction([]string{black})
+	// Red makes terminal text red.
+	Red = makeFunction([]string{red})
+	// Green makes terminal text green.
+	Green = makeFunction([]string{green})
+	// Yellow makes terminal text yellow.
+	Yellow = makeFunction([]string{yellow})
+	// Blue makes terminal text blue.
+	Blue = makeFunction([]string{blue})
+	// Magenta makes terminal text magenta.
+	Magenta = makeFunction([]string{magenta})
+	// Cyan makes terminal text cyan.
+	Cyan = makeFunction([]string{cyan})
+	// White makes terminal text white.
+	White = makeFunction([]string{white})
 
-// make the terminal text green - \033[30m
-func Green(text interface{}) string {
-	return makeString(regular, text, green)
-}
+	// BoldBlack makes terminal text bold and black.
+	BoldBlack = makeFunction([]string{black, bold})
+	// BoldRed makes terminal text bold and red.
+	BoldRed = makeFunction([]string{red, bold})
+	// BoldGreen makes terminal text bold and green.
+	BoldGreen = makeFunction([]string{green, bold})
+	// BoldYellow makes terminal text bold and yellow.
+	BoldYellow = makeFunction([]string{yellow, bold})
+	// BoldBlue makes terminal text bold and blue.
+	BoldBlue = makeFunction([]string{blue, bold})
+	// BoldMagenta makes terminal text bold and magenta.
+	BoldMagenta = makeFunction([]string{magenta, bold})
+	// BoldCyan makes terminal text bold and cyan.
+	BoldCyan = makeFunction([]string{cyan, bold})
+	// BoldWhite makes terminal text bold and white.
+	BoldWhite = makeFunction([]string{white, bold})
 
-// make the terminal text yellow - \033[30m
-func Yellow(text interface{}) string {
-	return makeString(regular, text, yellow)
-}
+	// BlinkBlack makes terminal text blink and black.
+	BlinkBlack = makeFunction([]string{black, blink})
+	// BlinkRed makes terminal text blink and red.
+	BlinkRed = makeFunction([]string{red, blink})
+	// BlinkGreen makes terminal text blink and green.
+	BlinkGreen = makeFunction([]string{green, blink})
+	// BlinkYellow makes terminal text blink and yellow.
+	BlinkYellow = makeFunction([]string{yellow, blink})
+	// BlinkBlue makes terminal text blink and blue.
+	BlinkBlue = makeFunction([]string{blue, blink})
+	// BlinkMagenta makes terminal text blink and magenta.
+	BlinkMagenta = makeFunction([]string{magenta, blink})
+	// BlinkCyan makes terminal text blink and cyan.
+	BlinkCyan = makeFunction([]string{cyan, blink})
+	// BlinkWhite makes terminal text blink and white.
+	BlinkWhite = makeFunction([]string{white, blink})
 
-//  make the terminal text blue - \033[30m
-func Blue(text interface{}) string {
-	return makeString(regular, text, blue)
-}
+	// UnderlineBlack makes terminal text underlined and black.
+	UnderlineBlack = makeFunction([]string{black, underline})
+	// UnderlineRed makes terminal text underlined and red.
+	UnderlineRed = makeFunction([]string{red, underline})
+	// UnderlineGreen makes terminal text underlined and green.
+	UnderlineGreen = makeFunction([]string{green, underline})
+	// UnderlineYellow makes terminal text underlined and yellow.
+	UnderlineYellow = makeFunction([]string{yellow, underline})
+	// UnderlineBlue makes terminal text underlined and blue.
+	UnderlineBlue = makeFunction([]string{blue, underline})
+	// UnderlineMagenta makes terminal text underlined and magenta.
+	UnderlineMagenta = makeFunction([]string{magenta, underline})
+	// UnderlineCyan makes terminal text underlined and cyan.
+	UnderlineCyan = makeFunction([]string{cyan, underline})
+	// UnderlineWhite makes terminal text underlined and white.
+	UnderlineWhite = makeFunction([]string{white, underline})
 
-//  make the terminal text magenta - \033[30m
-func Magenta(text interface{}) string {
-	return makeString(regular, text, magenta)
-}
-
-// make the terminal text cyan - \033[30m
-func Cyan(text interface{}) string {
-	return makeString(regular, text, cyan)
-}
-
-// make the terminal text white - \033[30m
-func White(text interface{}) string {
-	return makeString(regular, text, white)
-}
-
-// make the terminal text bold black - \033[1;30m
-func BoldBlack(text interface{}) string {
-	return makeString(bold, text, black)
-}
-
-// make the terminal text bold red - \1;033[30m
-func BoldRed(text interface{}) string {
-	return makeString(bold, text, red)
-}
-
-// make the terminal text bold green - \033[1;30m
-func BoldGreen(text interface{}) string {
-	return makeString(bold, text, green)
-}
-
-// make the terminal text bold yellow - \033[1;30m
-func BoldYellow(text interface{}) string {
-	return makeString(bold, text, yellow)
-}
-
-// make the terminal text bold blue - \033[1;30m
-func BoldBlue(text interface{}) string {
-	return makeString(bold, text, blue)
-}
-
-// make the terminal text bold magenta - \033[1;30m
-func BoldMagenta(text interface{}) string {
-	return makeString(bold, text, magenta)
-}
-
-// make the terminal text bold cyan - \033[1;30m
-func BoldCyan(text interface{}) string {
-	return makeString(bold, text, cyan)
-}
-
-// make the terminal text bold white - \033[1;30m
-func BoldWhite(text interface{}) string {
-	return makeString(bold, text, white)
-}
-
-// make the terminal text blink black - \033[5;30m
-func BlinkBlack(text interface{}) string {
-	return makeString(blink, text, black)
-}
-
-// make the terminal text blink red - \033[5;30m
-func BlinkRed(text interface{}) string {
-	return makeString(blink, text, red)
-}
-
-// make the terminal text blink green - \033[5;30m
-func BlinkGreen(text interface{}) string {
-	return makeString(blink, text, green)
-}
-
-// make the terminal text blink yellow - \033[5;30m
-func BlinkYellow(text interface{}) string {
-	return makeString(blink, text, yellow)
-}
-
-// make the terminal text blink blue - \033[5;30m
-func BlinkBlue(text interface{}) string {
-	return makeString(blink, text, blue)
-}
-
-// make the terminal text blink magenta - \033[5;30m
-func BlinkMagenta(text interface{}) string {
-	return makeString(blink, text, magenta)
-}
-
-// make the terminal text blink cyan - \033[5;30m
-func BlinkCyan(text interface{}) string {
-	return makeString(blink, text, cyan)
-}
-
-// make the terminal text blink white - \033[5;30m
-func BlinkWhite(text interface{}) string {
-	return makeString(blink, text, white)
-}
-
-// make the terminal text underline black - \033[4;30m
-func UnderlineBlack(text interface{}) string {
-	return makeString(underline, text, black)
-}
-
-// make the terminal text underline red - \033[4;30m
-func UnderlineRed(text interface{}) string {
-	return makeString(underline, text, red)
-}
-
-// make the terminal text underline green - \033[4;30m
-func UnderlineGreen(text interface{}) string {
-	return makeString(underline, text, green)
-}
-
-// make the terminal text underline yellow - \033[4;30m
-func UnderlineYellow(text interface{}) string {
-	return makeString(underline, text, yellow)
-}
-
-// make the terminal text underline blue - \033[4;30m
-func UnderlineBlue(text interface{}) string {
-	return makeString(underline, text, blue)
-}
-
-// make the terminal text underline magenta - \033[4;30m
-func UnderlineMagenta(text interface{}) string {
-	return makeString(underline, text, magenta)
-}
-
-// make the terminal text underline cyan - \033[4;30m
-func UnderlineCyan(text interface{}) string {
-	return makeString(underline, text, cyan)
-}
-
-// make the terminal text underline white - \033[4;30m
-func UnderlineWhite(text interface{}) string {
-	return makeString(underline, text, white)
-}
-
-// make the terminal text inverse black - \033[7;30m
-func InverseBlack(text interface{}) string {
-	return makeString(inverse, text, black)
-}
-
-// make the terminal text inverse red - \033[7;30m
-func InverseRed(text interface{}) string {
-	return makeString(inverse, text, red)
-}
-
-// make the terminal text inverse green - \033[7;30m
-func InverseGreen(text interface{}) string {
-	return makeString(inverse, text, green)
-}
-
-// make the terminal text inverse yellow - \033[7;30m
-func InverseYellow(text interface{}) string {
-	return makeString(inverse, text, yellow)
-}
-
-// make the terminal text inverse blue - \033[7;30m
-func InverseBlue(text interface{}) string {
-	return makeString(inverse, text, blue)
-}
-
-// make the terminal text inverse magenta - \033[7;30m
-func InverseMagenta(text interface{}) string {
-	return makeString(inverse, text, magenta)
-}
-
-// make the terminal text inverse cyan - \033[7;30m
-func InverseCyan(text interface{}) string {
-	return makeString(inverse, text, cyan)
-}
-
-// make the terminal text inverse white - \033[7;30m
-func InverseWhite(text interface{}) string {
-	return makeString(inverse, text, white)
-}
+	// InverseBlack makes terminal text inverted and black.
+	InverseBlack = makeFunction([]string{black, inverse})
+	// InverseRed makes terminal text inverted and red.
+	InverseRed = makeFunction([]string{red, inverse})
+	// InverseGreen makes terminal text inverted and green.
+	InverseGreen = makeFunction([]string{green, inverse})
+	// InverseYellow makes terminal text inverted and yellow.
+	InverseYellow = makeFunction([]string{yellow, inverse})
+	// InverseBlue makes terminal text inverted and blue.
+	InverseBlue = makeFunction([]string{blue, inverse})
+	// InverseMagenta makes terminal text inverted and magenta.
+	InverseMagenta = makeFunction([]string{magenta, inverse})
+	// InverseCyan makes terminal text inverted and cyan.
+	InverseCyan = makeFunction([]string{cyan, inverse})
+	// InverseWhite makes terminal text inverted and white.
+	InverseWhite = makeFunction([]string{white, inverse})
+)
